@@ -66,8 +66,8 @@ def create_plot(history, plot=plt, show=True):
   return plot
 
 
-def generate_random_seed(max_seed_length, min_value, max_value):
-  length = random.randint(1, max_seed_length)
+def generate_random_seed(min_seed_length, max_seed_length, min_value, max_value):
+  length = random.randint(min_seed_length, max_seed_length)
   return [random.randint(min_value, max_value) for _ in range(length)]
 
 
@@ -77,7 +77,7 @@ def plot_many_seeds(n, max_seed_length, min_value=1, max_value=100):
   fig, plots = plt.subplots(width, height)
   for r in range(height):
     for c in range(width):
-      seed = generate_random_seed(max_seed_length, min_value, max_value)
+      seed = generate_random_seed(1, max_seed_length, min_value, max_value)
       history = run_and_truncate(seed, n)
       create_plot(history, plot=plots[r][c], show=False)
 
@@ -90,11 +90,35 @@ def plot_many_seeds(n, max_seed_length, min_value=1, max_value=100):
   plt.show()
 
 
+def plot_seed_length_vs_convergence(max_length, seeds_per_length, n, epsilon=0.001, plot=plt, show=True):
+  lengths = []
+  conv_points = []
+
+  for length in range(2, max_length):
+    vals = []
+    for i in range(2, seeds_per_length):
+      seed = generate_random_seed(length, length, 1, 100)
+      history = iterate(seed, n)
+      conv_point = check_convergence(history, epsilon=epsilon)
+      vals.append(conv_point)
+
+    lengths.append(length)
+    conv_points.append(mean(vals))
+
+
+  plot.plot(lengths, conv_points)
+  if show:
+    plot.show()
+
+
+
 
 # seed = [1, 2, 4, 5, 8, 123, 123]
 # n = 10
 # history = run_and_truncate(seed, n)
 # create_plot(history)
 
-plot_many_seeds(10, 25)
+# plot_many_seeds(10, 25)
+
+plot_seed_length_vs_convergence(100, 100, 40)
 
