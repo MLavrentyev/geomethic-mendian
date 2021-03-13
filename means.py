@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 def calc_all(vals):
-  return {"mean": mean(vals), "gmean": geometric_mean(vals), "hmean": harmonic_mean(vals), "median": median(vals)}
+  return {"mean": mean(vals), "gmean": geometric_mean(vals), "hmean": harmonic_mean(vals), "median": median(vals), "mid-range": mean([max(vals), min(vals)])}
 
 
 def iterate(vals, n):
