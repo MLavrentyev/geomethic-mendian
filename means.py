@@ -105,9 +105,10 @@ def plot_seed_length_vs_convergence(max_length, seeds_per_length, n, epsilon=0.0
     lengths.append(length)
     conv_points.append(mean(vals))
 
-
   plot.plot(lengths, conv_points)
   if show:
+    plot.xlabel("seed length")
+    plot.ylabel(f"avg {epsilon}-convergence steps")
     plot.show()
 
 
@@ -120,5 +121,5 @@ def plot_seed_length_vs_convergence(max_length, seeds_per_length, n, epsilon=0.0
 
 # plot_many_seeds(10, 25)
 
-plot_seed_length_vs_convergence(100, 100, 40)
+plot_seed_length_vs_convergence(400, 50, 15)
 
